@@ -1,6 +1,6 @@
 #!/bin/bash
 
-BLOG_PATH="/home/potados/Temp/potados99.github.io"
+BLOG_PATH="/Users/potados/Documents/GitHub/potados99.github.io"
 
 for entry in $BLOG_PATH/_posts/*
 do 
