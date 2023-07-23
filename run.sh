@@ -7,25 +7,28 @@ do
     echo "$entry"
     for embed in $(grep "$entry" -e '\!\[.*\]\(.*\)')
     do
-        url=$(echo "$embed" | sed -n 's/^.*(\(.*\)).*$/\1/p')
+        url_part=$(echo "$embed" | sed -n 's/^.*(\(.*\)).*$/\1/p')
 
-        if [[ $url == "" ]]
+        if [[ $url_part == "" ]]
         then
             continue
         fi
 
-        if [[ $url == *imgur* ]]
+        if [[ $url_part == *imgur* ]]
         then
             # already done
-            echo "The url($url) is already on imgur. pass."
+            echo "The url($url_part) is already on imgur. pass."
             echo ""
             continue 
         fi
 
-        if [[ $url == /asset* ]]
+        if [[ $url_part == /asset* ]]
         then
             # make it absolute
-            url="$BLOG_PATH$url"
+            url="$BLOG_PATH$url_part"
+        else
+            # use as-is
+            url=$url_part
         fi
  
         read -n 1 -p "Do you want to upload the following image? [y/n/q] $url" ynq
@@ -57,7 +60,7 @@ do
 
         echo "Image at $url is now available at $imgur_url"
         
-        sed -i '' "s|$url|$imgur_url|g" $entry
+        sed -i '' "s|$url_part|$imgur_url|g" $entry
 
         echo "Replaced image url in markdown."
         echo ""
