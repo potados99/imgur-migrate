@@ -1,6 +1,8 @@
 #!/bin/bash
 
-for entry in ~/Documents/GitHub/potados99.github.io/_posts/*
+BLOG_PATH="/home/potados/Temp/potados99.github.io"
+
+for entry in $BLOG_PATH/_posts/*
 do 
     echo "$entry"
     for embed in $(grep "$entry" -e '\!\[.*\]\(.*\)')
@@ -23,7 +25,7 @@ do
         if [[ $url == /asset* ]]
         then
             # make it absolute
-            url="/Users/potados/Documents/GitHub/potados99.github.io$url"
+            url="$BLOG_PATH$url"
         fi
  
         read -n 1 -p "Do you want to upload the following image? [y/n/q] $url" ynq
